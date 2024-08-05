@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Paciente</title>
+    <title>Editar Paciente</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -18,37 +18,46 @@
         </div>
     </nav>
     <div class="container mt-4">
-        <h2>Adicionar Paciente</h2>
-        <form action="store.php" method="POST">
+        <h2>Editar Paciente</h2>
+        <?php
+        include 'db.php';
+
+        $id = $_GET['id'];
+        $sql = "SELECT * FROM pacientes WHERE id = $id";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        ?>
+        <form action="update.php" method="POST">
+            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
             <div class="form-group">
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $row['nome']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="idade">Idade</label>
-                <input type="number" class="form-control" id="idade" name="idade" required>
+                <input type="number" class="form-control" id="idade" name="idade" value="<?php echo $row['idade']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="genero">Gênero</label>
                 <select class="form-control" id="genero" name="genero" required>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Feminino">Feminino</option>
-                    <option value="Outro">Outro</option>
+                    <option value="Masculino" <?php echo ($row['genero'] == 'Masculino') ? 'selected' : ''; ?>>Masculino</option>
+                    <option value="Feminino" <?php echo ($row['genero'] == 'Feminino') ? 'selected' : ''; ?>>Feminino</option>
+                    <option value="Outro" <?php echo ($row['genero'] == 'Outro') ? 'selected' : ''; ?>>Outro</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="endereco">Endereço</label>
-                <input type="text" class="form-control" id="endereco" name="endereco" required>
+                <input type="text" class="form-control" id="endereco" name="endereco" value="<?php echo $row['endereco']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="telefone">Telefone</label>
-                <input type="text" class="form-control" id="telefone" name="telefone" required>
+                <input type="text" class="form-control" id="telefone" name="telefone" value="<?php echo $row['telefone']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo $row['email']; ?>" required>
             </div>
-            <button type="submit" class="btn btn-primary">Adicionar</button>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
     </div>
     <footer class="bg-light text-center text-lg-start mt-4">

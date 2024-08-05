@@ -14,9 +14,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="create.php">Adicionar Paciente</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Lista de Pacientes</a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -24,30 +21,35 @@
         <h2>Lista de Pacientes</h2>
         <?php
         include 'db.php';
-        $sql = "SELECT id, nome, idade, genero, endereco, telefone, email FROM pacientes";
-        $resultado = $conn->query($sql);
 
-        if ($resultado->num_rows > 0) {
-            echo "<table class='table table-striped'><thead><tr><th>ID</th><th>Nome</th><th>Idade</th><th>Gênero</th><th>Endereço</th><th>Telefone</th><th>Email</th><th>Ações</th></tr></thead><tbody>";
-            while($linha = $resultado->fetch_assoc()) {
-                echo "<tr>
-                        <td>".$linha["id"]."</td>
-                        <td>".$linha["nome"]."</td>
-                        <td>".$linha["idade"]."</td>
-                        <td>".$linha["genero"]."</td>
-                        <td>".$linha["endereco"]."</td>
-                        <td>".$linha["telefone"]."</td>
-                        <td>".$linha["email"]."</td>
-                        <td>
-                            <a class='btn btn-warning btn-sm' href='update.php?id=".$linha["id"]."'>Editar</a> 
-                            <a class='btn btn-danger btn-sm' href='delete.php?id=".$linha["id"]."'>Excluir</a>
-                        </td>
-                      </tr>";
+        $sql = "SELECT * FROM pacientes";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            echo '<table class="table">';
+            echo '<thead><tr><th>ID</th><th>Nome</th><th>Idade</th><th>Gênero</th><th>Endereço</th><th>Telefone</th><th>Email</th><th>Ações</th></tr></thead>';
+            echo '<tbody>';
+            while($row = $result->fetch_assoc()) {
+                echo '<tr>';
+                echo '<td>' . $row["id"] . '</td>';
+                echo '<td>' . $row["nome"] . '</td>';
+                echo '<td>' . $row["idade"] . '</td>';
+                echo '<td>' . $row["genero"] . '</td>';
+                echo '<td>' . $row["endereco"] . '</td>';
+                echo '<td>' . $row["telefone"] . '</td>';
+                echo '<td>' . $row["email"] . '</td>';
+                echo '<td>';
+                echo '<a href="edit.php?id=' . $row["id"] . '" class="btn btn-warning btn-sm">Editar</a> ';
+                echo '<a href="delete.php?id=' . $row["id"] . '" class="btn btn-danger btn-sm">Excluir</a>';
+                echo '</td>';
+                echo '</tr>';
             }
-            echo "</tbody></table>";
+            echo '</tbody>';
+            echo '</table>';
         } else {
-            echo "<div class='alert alert-info' role='alert'>0 resultados</div>";
+            echo '<div class="alert alert-info" role="alert">Nenhum paciente encontrado.</div>';
         }
+
         $conn->close();
         ?>
     </div>
