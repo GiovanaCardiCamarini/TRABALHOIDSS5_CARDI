@@ -1,31 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Paciente</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.php">Clinica Médica</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Lista de Pacientes</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container mt-4">
-        <h2>Editar Paciente</h2>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Editar Paciente</h2>
         <?php
         include 'db.php';
-
-        $id = $_GET['id'];
-        $sql = "SELECT * FROM pacientes WHERE id = $id";
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
+        if (isset($_GET['id'])) {
+            $id = intval($_GET['id']);
+            $sql = "SELECT * FROM pacientes WHERE id = $id";
+            $result = $conn->query($sql);
+            if ($result->num_rows == 1) {
+                $row = $result->fetch_assoc();
         ?>
         <form action="update.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
@@ -55,15 +46,4 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo $row['email']; ?>" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-        </form>
-    </div>
-    <footer class="bg-light text-center text-lg-start mt-4">
-        <div class="text-center p-3">
-            © 2024 Clinica Médica
-        </div>
-    </footer>
-</body>
-</html>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo
