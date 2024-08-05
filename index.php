@@ -1,57 +1,63 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Pacientes</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function confirmarExclusao() {
+            return confirm("Você tem certeza que deseja excluir este paciente?");
+        }
+    </script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.php">Clinica Médica</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="create.php">Adicionar Paciente</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container mt-4">
-        <h2>Lista de Pacientes</h2>
-        <?php
-        include 'db.php';
+    <div class="container mt-5">
+        <h2 class="text-center">Lista de Pacientes</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Gênero</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include 'db.php';
+                $sql = "SELECT * FROM pacientes";
+                $result = $conn->query($sql);
 
-        $sql = "SELECT * FROM pacientes";
-        $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>" . $row["id"] . "</td>
+                                <td>" . $row["nome"] . "</td>
+                                <td>" . $row["idade"] . "</td>
+                                <td>" . $row["genero"] . "</td>
+                                <td>" . $row["endereco"] . "</td>
+                                <td>" . $row["telefone"] . "</td>
+                                <td>" . $row["email"] . "</td>
+                                <td>
+                                    <a href='edit.php?id=" . $row["id"] . "' class='btn btn-warning btn-sm'>Editar</a>
+                                    <a href='delete.php?id=" . $row["id"] . "' class='btn btn-danger btn-sm' onclick='return confirmarExclusao()'>Excluir</a>
+                                </td>
+                            </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='8' class='text-center'>Nenhum paciente encontrado</td></tr>";
+                }
 
-        if ($result->num_rows > 0) {
-            echo '<table class="table">';
-            echo '<thead><tr><th>ID</th><th>Nome</th><th>Idade</th><th>Gênero</th><th>Endereço</th><th>Telefone</th><th>Email</th><th>Ações</th></tr></thead>';
-            echo '<tbody>';
-            while($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td>' . $row["id"] . '</td>';
-                echo '<td>' . $row["nome"] . '</td>';
-                echo '<td>' . $row["idade"] . '</td>';
-                echo '<td>' . $row["genero"] . '</td>';
-                echo '<td>' . $row["endereco"] . '</td>';
-                echo '<td>' . $row["telefone"] . '</td>';
-                echo '<td>' . $row["email"] . '</td>';
-                echo '<td>';
-                echo '<a href="edit.php?id=' . $row["id"] . '" class="btn btn-warning btn-sm">Editar</a> ';
-                echo '<a href="delete.php?id=' . $row["id"] . '" class="btn btn-danger btn-sm">Excluir</a>';
-                echo '</td>';
-                echo '</tr>';
-            }
-            echo '</tbody>';
-            echo '</table>';
-        } else {
-            echo '<div class="alert alert-info" role="alert">Nenhum paciente encontrado.</div>';
-        }
-
-        $conn->close();
-        ?>
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+        <a href="create.php" class="btn btn-primary">Adicionar Paciente</a>
     </div>
     <footer class="bg-light text-center text-lg-start mt-4">
         <div class="text-center p-3">

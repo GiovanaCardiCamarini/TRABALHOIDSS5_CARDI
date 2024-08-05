@@ -1,20 +1,16 @@
 <?php
 include 'db.php';
 
-$id = $_POST['id'];
-$nome = $_POST['nome'];
-$idade = $_POST['idade'];
-$genero = $_POST['genero'];
-$endereco = $_POST['endereco'];
-$telefone = $_POST['telefone'];
-$email = $_POST['email'];
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+    $sql = "DELETE FROM pacientes WHERE id = $id";
 
-$sql = "UPDATE pacientes SET nome='$nome', idade='$idade', genero='$genero', endereco='$endereco', telefone='$telefone', email='$email' WHERE id=$id";
-
-if ($conn->query($sql) === TRUE) {
-    header("Location: index.php");
-} else {
-    echo "Erro: " . $sql . "<br>" . $conn->error;
+    if ($conn->query($sql) === TRUE) {
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "Erro ao excluir: " . $conn->error;
+    }
 }
 
 $conn->close();
