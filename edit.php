@@ -20,9 +20,27 @@
 
             if ($result->num_rows == 1) {
                 $row = $result->fetch_assoc();
+
+                // Processa o formulário de atualização
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $nome = $_POST['nome'];
+                    $idade = $_POST['idade'];
+                    $genero = $_POST['genero'];
+                    $endereco = $_POST['endereco'];
+                    $telefone = $_POST['telefone'];
+                    $email = $_POST['email'];
+
+                    $updateSql = "UPDATE pacientes SET nome='$nome', idade='$idade', genero='$genero', endereco='$endereco', telefone='$telefone', email='$email' WHERE id=$id";
+
+                    if ($conn->query($updateSql) === TRUE) {
+                        echo '<div class="alert alert-success">Paciente atualizado com sucesso!</div>';
+                    } else {
+                        echo '<div class="alert alert-danger">Erro ao atualizar paciente: ' . $conn->error . '</div>';
+                    }
+                }
         ?>
-        <form action="process.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+        <form action="" method="POST">
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
             <div class="form-group">
                 <label for="nome">Nome</label>
                 <input type="text" class="form-control" id="nome" name="nome" value="<?php echo htmlspecialchars($row['nome']); ?>" required>
