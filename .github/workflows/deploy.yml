@@ -19,5 +19,5 @@ jobs:
         SOURCE: "./"
         REMOTE_HOST: "ec2-54-159-227-198.compute-1.amazonaws.com"
         REMOTE_USER: "ec2-user"
-        TARGET: "/var/www/html"
-        EXCLUDE: "/dist/, /vendor/, /node_modules/, **.env"
+        TARGET: "/home/ec2-user"
+        
