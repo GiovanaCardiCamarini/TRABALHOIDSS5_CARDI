@@ -1,24 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Paciente</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.php">Clinica Médica</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Lista de Pacientes</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container mt-4">
-        <h2>Adicionar Paciente</h2>
+    <div class="container mt-5">
+        <h2 class="text-center">Adicionar Paciente</h2>
         <form action="store.php" method="POST">
             <div class="form-group">
                 <label for="nome">Nome</label>
@@ -48,7 +38,7 @@
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
-            <button type="submit" class="btn btn-primary">Adicionar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
     </div>
     <footer class="bg-light text-center text-lg-start mt-4">

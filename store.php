@@ -12,6 +12,7 @@ $sql = "INSERT INTO pacientes (nome, idade, genero, endereco, telefone, email) V
 
 if ($conn->query($sql) === TRUE) {
     header("Location: index.php");
+    exit(); // Garantir que o script pare aqui após o redirecionamento
 } else {
     echo "Erro: " . $sql . "<br>" . $conn->error;
 }

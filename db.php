@@ -1,7 +1,7 @@
 <?php
 $servidor = "localhost";
 $usuario = "root";
-$senha = "senha_da_nasa"; // Coloque a senha do seu MySQL se houver
+$senha = "senha_da_nasa";
 $banco = "clinica_db";
 
 $conn = new mysqli($servidor, $usuario, $senha, $banco);
