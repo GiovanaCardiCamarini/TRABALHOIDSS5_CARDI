@@ -71,6 +71,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Atualizar</button>
             <a href="index.php" class="btn btn-secondary">Cancelar</a>
+            <a href="index.php" class="btn btn-info">Voltar para a Lista</a>
         </form>
         <?php
             } else {
